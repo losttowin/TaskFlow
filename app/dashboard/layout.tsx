@@ -39,7 +39,7 @@ export default function DashboardLayout({
   if (!user) return null
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Navbar email={user.email} onLogout={handleLogout} />
       {children}
       <div className="h-16 safe-area-bottom" /> {/* TabBar spacer */}

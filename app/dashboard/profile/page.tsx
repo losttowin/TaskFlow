@@ -9,11 +9,13 @@ import { exportCSV, exportJSON, downloadFile } from '@/app/lib/export'
 import { isOnline, replayOfflineActions } from '@/app/lib/sync-service'
 import { isSupabaseConfigured } from '@/app/lib/supabase'
 import { useToast } from '@/app/lib/toast'
+import { useTheme } from '@/app/lib/theme-context'
 
 export default function ProfilePage() {
   const { user, signOut } = useAuth()
   const router = useRouter()
   const toast = useToast()
+  const { theme, toggle } = useTheme()
   const [tasks, setTasks] = useState<Task[]>([])
   const [online, setOnline] = useState(true)
   const [syncing, setSyncing] = useState(false)
@@ -111,7 +113,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Info */}
-          <div className="bg-white rounded-xl border border-zinc-200 divide-y divide-zinc-100">
+          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800">
             {items.map((item) => (
               <div
                 key={item.label}
@@ -126,11 +128,11 @@ export default function ProfilePage() {
           </div>
 
           {/* Export */}
-          <div className="bg-white rounded-xl border border-zinc-200 divide-y divide-zinc-100">
+          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800">
             <button
               onClick={handleExportCSV}
               disabled={tasks.length === 0}
-              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <span>导出 CSV</span>
               <span className="text-zinc-400">📄</span>
@@ -138,19 +140,32 @@ export default function ProfilePage() {
             <button
               onClick={handleExportJSON}
               disabled={tasks.length === 0}
-              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <span>导出 JSON</span>
               <span className="text-zinc-400">📦</span>
             </button>
           </div>
 
+          {/* Theme */}
+          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800">
+            <button
+              onClick={toggle}
+              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer"
+            >
+              <span className="dark:text-zinc-100">外观模式</span>
+              <span className="text-zinc-500 dark:text-zinc-400 text-xs">
+                {theme === 'dark' ? '🌙 深色' : '☀️ 浅色'}
+              </span>
+            </button>
+          </div>
+
           {/* Sync */}
-          <div className="bg-white rounded-xl border border-zinc-200 divide-y divide-zinc-100">
+          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800">
             <button
               onClick={handleSync}
               disabled={syncing || online}
-              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <span>{syncing ? '同步中...' : '同步离线数据'}</span>
               <span className="text-zinc-400">🔄</span>
@@ -158,7 +173,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Actions */}
-          <div className="bg-white rounded-xl border border-zinc-200 divide-y divide-zinc-100">
+          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800">
             <button
               onClick={() => {
                 if (typeof window !== 'undefined') {
@@ -166,7 +181,7 @@ export default function ProfilePage() {
                   toast.success('本地数据已清除')
                 }
               }}
-              className="w-full text-left px-4 py-3 text-sm text-zinc-900 hover:bg-zinc-50 cursor-pointer"
+              className="w-full text-left px-4 py-3 text-sm text-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer"
             >
               清除本地数据
             </button>

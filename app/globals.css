@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: #ffffff;
@@ -13,18 +14,10 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  /* Mobile optimizations */
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -32,12 +25,18 @@ body {
   user-select: none;
 }
 
-/* Safe area padding for iOS notch */
+/* Dark mode base */
+.dark body {
+  background: #09090b;
+  color: #fafafa;
+}
+
+/* Safe area */
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Hide scrollbar for horizontal scroll containers */
+/* Hide scrollbar */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -46,12 +45,12 @@ body {
   display: none;
 }
 
-/* Smooth scrolling */
+/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Touch-friendly form elements */
+/* Touch-friendly inputs */
 input,
 select,
 textarea,
@@ -60,7 +59,7 @@ button {
   appearance: none;
 }
 
-/* Prevent iOS zoom on input focus */
+/* Prevent iOS zoom */
 @media screen and (max-width: 768px) {
   input[type="text"],
   input[type="email"],
@@ -71,4 +70,9 @@ button {
   textarea {
     font-size: 16px !important;
   }
+}
+
+/* Dark mode transitions */
+* {
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }

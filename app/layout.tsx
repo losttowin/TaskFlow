@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/app/lib/auth-context";
 import { ToastProvider } from "@/app/lib/toast";
+import { ThemeProvider } from "@/app/lib/theme-context";
 import { PwaRegister } from "@/app/components/PwaRegister";
 
 const geistSans = Geist({
@@ -56,7 +57,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
       </head>
       <body className="min-h-full flex flex-col bg-zinc-50">
-        <ToastProvider><AuthProvider>{children}</AuthProvider></ToastProvider>
+        <ThemeProvider><ToastProvider><AuthProvider>{children}</AuthProvider></ToastProvider></ThemeProvider>
         <PwaRegister />
       </body>
     </html>

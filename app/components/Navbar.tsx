@@ -11,13 +11,13 @@ export default function Navbar({ email, onLogout }: NavbarProps) {
   const router = useRouter()
 
   return (
-    <nav className="bg-white border-b border-zinc-200 sticky top-0 z-40">
+    <nav className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-40">
       <div className="max-w-lg mx-auto px-4 h-12 flex items-center justify-between">
         <button
           onClick={() => router.push('/dashboard')}
           className="flex items-center gap-1.5 cursor-pointer"
         >
-          <span className="text-lg font-bold text-zinc-900">TaskFlow</span>
+          <span className="text-lg font-bold text-zinc-900 dark:text-zinc-100">TaskFlow</span>
         </button>
 
         {email && (

@@ -30,14 +30,14 @@ export default function StatsCards({ tasks }: StatsCardsProps) {
   ]
 
   return (
-    <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+    <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x scrollbar-hide">
       {cards.map((card) => (
         <div
           key={card.label}
-          className={`${card.color} rounded-lg p-3 text-center`}
+          className={`${card.color} rounded-xl p-3 text-center flex-shrink-0 w-[72px] sm:flex-1 snap-start`}
         >
-          <div className="text-2xl font-bold">{card.value}</div>
-          <div className="text-xs mt-0.5 opacity-75">{card.label}</div>
+          <div className="text-lg font-bold leading-tight">{card.value}</div>
+          <div className="text-[10px] mt-0.5 opacity-75 leading-tight">{card.label}</div>
         </div>
       ))}
     </div>

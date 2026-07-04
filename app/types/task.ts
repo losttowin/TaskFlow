@@ -10,7 +10,11 @@ export type Task = {
   priority: TaskPriority
   due_date: string | null
   tag: string | null
+  is_pinned?: boolean
+  order_index?: number
+  remind_at?: string | null
   created_at: string
+  updated_at?: string
 }
 
 export type TaskFilterState = {

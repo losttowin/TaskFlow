@@ -10,6 +10,7 @@ type Tab = {
 }
 
 const tabs: Tab[] = [
+  { key: 'today', label: '今日', icon: '📅', path: '/dashboard/today' },
   { key: 'tasks', label: '任务', icon: '📋', path: '/dashboard' },
   { key: 'stats', label: '统计', icon: '📊', path: '/dashboard/stats' },
   { key: 'profile', label: '我的', icon: '👤', path: '/dashboard/profile' },
@@ -37,10 +38,8 @@ export default function TabBar() {
                 active ? 'text-zinc-900' : 'text-zinc-400'
               }`}
             >
-              <span className="text-lg">{tab.icon}</span>
-              <span className={`text-[10px] font-medium ${active ? '' : ''}`}>
-                {tab.label}
-              </span>
+              <span className="text-base">{tab.icon}</span>
+              <span className="text-[10px] font-medium">{tab.label}</span>
             </button>
           )
         })}

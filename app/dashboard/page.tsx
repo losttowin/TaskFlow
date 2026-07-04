@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useAuth } from '@/app/lib/auth-context'
+import { useToast } from '@/app/lib/toast'
 import { Task, TaskFilterState, TaskPriority, TaskSortType, TaskStatus, PRIORITY_ORDER, STATUS_ORDER } from '@/app/types/task'
 import {
   fetchTasks,
@@ -11,13 +12,13 @@ import {
   changeTaskStatus,
 } from '@/app/lib/task-service'
 import StatsCards from '@/app/components/StatsCards'
-import TaskFilter from '@/app/components/TaskFilter'
 import TaskForm from '@/app/components/TaskForm'
 import TaskList from '@/app/components/TaskList'
 import FAB from '@/app/components/FAB'
 
 export default function DashboardPage() {
   const { user } = useAuth()
+  const toast = useToast()
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
@@ -73,6 +74,7 @@ export default function DashboardPage() {
     })
     setShowForm(false)
     loadTasks()
+    toast.success('任务创建成功')
   }
 
   const handleEdit = async (data: {
@@ -90,12 +92,14 @@ export default function DashboardPage() {
     })
     setEditingTask(null)
     loadTasks()
+    toast.success('任务已更新')
   }
 
   const handleDelete = async (id: string) => {
     if (!confirm('确定要删除这个任务吗？')) return
     await removeTask(id)
     loadTasks()
+    toast.success('任务已删除')
   }
 
   const handleStatusChange = async (id: string, status: TaskStatus) => {

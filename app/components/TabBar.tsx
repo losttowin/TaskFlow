@@ -11,7 +11,7 @@ type Tab = {
 
 const tabs: Tab[] = [
   { key: 'today', label: '今日', icon: '📅', path: '/dashboard/today' },
-  { key: 'tasks', label: '任务', icon: '📋', path: '/dashboard' },
+  { key: 'kanban', label: '看板', icon: '📌', path: '/dashboard/kanban' },
   { key: 'calendar', label: '日历', icon: '🗓️', path: '/dashboard/calendar' },
   { key: 'stats', label: '统计', icon: '📊', path: '/dashboard/stats' },
   { key: 'profile', label: '我的', icon: '👤', path: '/dashboard/profile' },

@@ -10,6 +10,7 @@ import { isOnline, replayOfflineActions } from '@/app/lib/sync-service'
 import { isSupabaseConfigured } from '@/app/lib/supabase'
 import { useToast } from '@/app/lib/toast'
 import { useTheme } from '@/app/lib/theme-context'
+import { requestNotificationPermission, getNotificationPermission } from '@/app/lib/notifications'
 
 export default function ProfilePage() {
   const { user, signOut } = useAuth()
@@ -19,6 +20,7 @@ export default function ProfilePage() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [online, setOnline] = useState(true)
   const [syncing, setSyncing] = useState(false)
+  const [notifPerm, setNotifPerm] = useState<NotificationPermission>('default')
 
   const loadTasks = useCallback(async () => {
     if (!user) return
@@ -34,6 +36,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     setOnline(isOnline())
+    setNotifPerm(getNotificationPermission())
     const onStatus = () => setOnline(isOnline())
     window.addEventListener('online', onStatus)
     window.addEventListener('offline', onStatus)
@@ -42,6 +45,17 @@ export default function ProfilePage() {
       window.removeEventListener('offline', onStatus)
     }
   }, [])
+
+  const handleNotifToggle = async () => {
+    if (notifPerm === 'granted') {
+      toast.info('通知已开启，可在浏览器设置中关闭')
+      return
+    }
+    const result = await requestNotificationPermission()
+    setNotifPerm(result)
+    if (result === 'granted') toast.success('通知已开启')
+    else toast.error('通知权限被拒绝')
+  }
 
   const handleLogout = async () => {
     await signOut()
@@ -156,6 +170,15 @@ export default function ProfilePage() {
               <span className="dark:text-zinc-100">外观模式</span>
               <span className="text-zinc-500 dark:text-zinc-400 text-xs">
                 {theme === 'dark' ? '🌙 深色' : '☀️ 浅色'}
+              </span>
+            </button>
+            <button
+              onClick={handleNotifToggle}
+              className="w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-zinc-50 dark:hover:bg-zinc-800 cursor-pointer"
+            >
+              <span className="dark:text-zinc-100">推送通知</span>
+              <span className="text-zinc-500 dark:text-zinc-400 text-xs">
+                {notifPerm === 'granted' ? '🔔 已开启' : notifPerm === 'denied' ? '🔕 已拒绝' : '🔔 点击开启'}
               </span>
             </button>
           </div>
